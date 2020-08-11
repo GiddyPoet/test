@@ -20,13 +20,13 @@ func echo(c net.Conn, shout string, delay time.Duration) {
 func handleConn(conn net.Conn) {
 	input := bufio.NewScanner(conn)
 	for input.Scan() {
-		echo(conn, input.Text(), 1*time.Second)
+		go echo(conn, input.Text(), 1*time.Second)
 	}
 	conn.Close()
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "0.0.0.0:7353")
+	listener, err := net.Listen("tcp", "0.0.0.0:8000")
 	if err != nil {
 		log.Fatal(err)
 		return
